@@ -1,0 +1,52 @@
+.page_login{
+    display: flex;
+    justify-content: center;
+}
+.login{
+    /* display: inline-block; */
+    /* display: inline-block; */
+    display: flex;
+    flex-direction: column;
+    /* width: 336px; */
+    width: auto;
+    row-gap: 35px;
+}
+.username{
+    display: flex;
+    background-color: aqua;
+    width: auto;
+    height: auto;
+    align-items: center;
+}
+.username img{
+    display: flex;
+    position: absolute;
+    margin-left: 15px;
+}
+.username input,
+.password{
+    width: 336px;
+    height: 64px;
+    /* margin-bottom: 35px; */
+    border-radius: 16px;
+    background-color: #F6F1EE;
+    border: 2px none none #4F4A45;
+    font-size: 24px;
+    color: #4F4A45;
+    padding-left: 60px;
+}
+.username input:focus + img{
+    opacity: 0;
+}
+.username input:focus{
+    padding-left: 15px;
+}
+.button{
+    width: 336px;
+    height: 64px;
+    margin-bottom: 35px;
+    border-radius: 16px;
+    background-color: #ED7D31;
+    font-size: 24px;
+    border: none;
+}
