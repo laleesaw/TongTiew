@@ -1,0 +1,39 @@
+.page_login{
+    display: flex;
+    flex-direction: column;
+    /* background-color: aquamarine; */
+    align-items: center;
+}
+
+#signup_icon{
+    margin-top: 51px;
+    margin-bottom: 35px;
+}
+
+.login{
+    display: flex;
+    flex-direction: column;
+    width: auto;
+    row-gap: 35px;
+    /* background-color: bisque; */
+    align-items: center;
+}
+
+.button{
+    width: 336px;
+    height: 64px;
+    margin-bottom: 35px;
+    border-radius: 16px;
+    background-color: #ED7D31;
+    font-size: 24px;
+    border: none;
+}
+
+p{
+    color: #4F4A45;
+    font-size: 20px;
+}
+p span{
+    color: #ED7D31;
+    font-size: 24px;
+}

@@ -1,0 +1,28 @@
+.input_bar{
+    display: flex;
+    width: auto;
+    height: auto;
+    align-items: center;
+}
+.input_bar img{
+    display: flex;
+    position: absolute;
+    margin-left: 15px;
+    cursor: pointer;
+}
+.input_bar input{
+    width: 336px;
+    height: 64px;
+    border-radius: 16px;
+    background-color: #F6F1EE;
+    border: 2px none none #4F4A45;
+    font-size: 24px;
+    color: #4F4A45;
+    padding-left: 60px;
+}
+.input_bar input:focus + img{
+    opacity: 0;
+}
+.input_bar input:focus{
+    padding-left: 15px;
+}
