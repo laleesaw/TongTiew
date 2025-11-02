@@ -1,8 +1,8 @@
 package main
 
 import (
-	"TongTiew/controllers"
 	"TongTiew/db"
+	"TongTiew/routes"
 
 	"github.com/gin-gonic/gin"
 )
@@ -12,8 +12,7 @@ func main() {
 
 	r := gin.Default()
 
-	// Route สำหรับ signup
-	r.POST("/signup", controllers.SignUpHandler)
+	routes.UserRoutes(r)
 
 	r.Run(":8080")
 }

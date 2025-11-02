@@ -14,7 +14,8 @@ func SignUpHandler(c *gin.Context) {
 	var newUser models.User
 
 	// Bind JSON จาก request body
-	if err := c.BindJSON(&newUser); err != nil {
+	err_connect_database := c.BindJSON(&newUser)
+	if err_connect_database != nil {
 		c.JSON(400, gin.H{"error": "Invalid request"})
 		return
 	}
@@ -26,9 +27,10 @@ func SignUpHandler(c *gin.Context) {
 	newUser.CreateAt = time.Now() // ถ้าอยาก set เอง
 
 	// บันทึกลง DB
-	if err := db.DB.Create(&newUser).Error; err != nil {
-		fmt.Println("DB insert error:", err) // <-- ดู error จริงใน console
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+	err_create := db.DB.Create(&newUser).Error
+	if err_create != nil {
+		fmt.Println("DB insert error:", err_create) // <-- ดู error จริงใน console
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err_create.Error()})
 		return
 	}
 
