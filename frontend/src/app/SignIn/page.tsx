@@ -35,7 +35,7 @@ export default function Register(){
         localStorage.setItem("token", token);
 
         alert("Login success!");
-        window.location.href = "/home";
+        window.location.href = "/Explore_page";
         } catch (err) {
         alert("Login failed");
         console.error(err);

@@ -1,29 +1,23 @@
-.input_bar{
+.button_bar{
     display: flex;
     width: auto;
     height: auto;
     align-items: center;
 }
-.input_bar img{
+#img_button{
     display: flex;
     position: absolute;
     margin-left: 15px;
     cursor: pointer;
 }
-.input_bar input{
+.button_bar button{
     width: 336px;
     height: 64px;
     border-radius: 16px;
     background-color: #F6F1EE;
-    border: 2px none none #4F4A45;
+    border: 2px solid #4F4A45;
     font-size: 24px;
     color: #4F4A45;
-    padding-left: 60px;
-}
-.input_bar input:focus + img{
-    opacity: 0;
-}
-.input_bar input:focus{
-    padding-left: 15px;
-    transition: 0.5s;
+    text-align: left;
+    padding-left: 79px;
 }
