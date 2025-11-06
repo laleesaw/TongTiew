@@ -45,10 +45,17 @@ export default function Register(){
         <div className = "page_login">
             <Image id = "welcome" src = "/welcome.png" alt = "welcome to TongTiew" width={343} height={144}></Image>
             <div className = "login">
-                <Input_bar username = "USERNAME" img_link = "/user_logo.png" type_input = "text" input_value = {email} onChange_value = {(e) => setEmail(e.target.value)}
- ></Input_bar>
-                <Input_bar username = "PASSWORD" img_link = "/password_icon.png" type_input = "password" input_value = {password} onChange_value = {(e) => setPassword(e.target.value)}></Input_bar>
-                <button className = "button" onClick={handleLogin}>SIGN In</button>
+                <Input_bar username = "USERNAME"
+                 img_link = "/user_logo.png" 
+                 type_input = "text" 
+                 input_value = {email} 
+                 onChange_value = {(e) => setEmail(e.target.value)}></Input_bar>
+                <Input_bar username = "PASSWORD"
+                 img_link = "/password_icon.png" 
+                 type_input = "password" 
+                 input_value = {password} 
+                 onChange_value = {(e) => setPassword(e.target.value)}></Input_bar>
+                <button className = "button" onClick={handleLogin}>SIGN IN</button>
             </div>
             <p>Don’t have an account?<span><Link href = "/SignUp"> Sign Up</Link></span></p>
         </div>
