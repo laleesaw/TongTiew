@@ -1,0 +1,62 @@
+.profile_page{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+
+.frame_profile{
+    position:absolute;
+    margin-top: 164px;
+    z-index: 5;
+}
+
+
+.profile{
+    width: 208px;
+    height: 208px;
+    border-radius: 104px;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+}
+#inner_profile{
+    position: absolute;
+    z-index: 2;
+    width: 100%;
+    height: 120%;
+}
+.user_detail{
+    margin-top: 84px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 24px;
+}
+.user_detail p{
+    display: flex;
+    border: 2px solid #4F4A45;
+    border-radius: 16px;
+    font-size: 24px;
+    width: 336px;
+    height: 64px;
+    align-items: center;
+    padding-left: 30px;
+}
+
+
+
+
+
+
+
+
+
+
+.nav_bar{
+    position: fixed;
+    bottom: 0px;
+    z-index: 8;
+}
