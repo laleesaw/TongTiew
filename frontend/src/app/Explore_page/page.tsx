@@ -19,7 +19,23 @@ interface ExploreResponse {
   status: string;
   data: Attraction[];
 }
+function Fetch_api_attraction_background(){
+    const [img_path, setImg_path] = useState<string>("/waiting.png");
+    useEffect(() => {
+        const fetch_background = async () => {
+        try {
+            const res = await axios.post<ExploreResponse>("http://localhost:8080/explore");
+            setImg_path(res.data.data[0].img_path);
+        } catch (err) {
+            console.error("Error fetching detail:", err);
+            setImg_path("Failed to load detail.");
+        }
+        };
 
+        fetch_background();
+    }, []);
+    return img_path;
+}
 
 function Fetch_api_attraction_Off(){
     const [detail, setDetail] = useState<string>("Loading...");
@@ -117,7 +133,7 @@ function Detail_handler(){
             {show_detail? <Fetch_api_attraction_On></Fetch_api_attraction_On>: <Fetch_api_attraction_Off></Fetch_api_attraction_Off>}
             <div className = "more_detail">
                 <button className = "button_more_detail" onClick = {click_handler}>
-                    <Image id = "more_detail" src = "/more_detail_icon.png" alt = "more_detail" width = {32} height = {32}></Image>
+                    <Image id = "more_detail" src = {"/more_detail_icon.png"} alt = "more_detail" width = {32} height = {32}></Image>
                 </button>
             </div>
         </div>
@@ -132,7 +148,7 @@ function Detail( ){
 
     <div className = "box">
         <h1>Yaowarat</h1>
-        {Detail_handler()}
+        <Detail_handler></Detail_handler>
         <div className = "set_button">
             <Button_bar text = "RESTAURANT" img_link = "/restaurant_icon.png" end_point = {"/SignIn"} width_icon = {48} height_icon = {48}></Button_bar>
             <Button_bar text = "HOTEL" img_link = "/hotel_icon.png" end_point = {"/SignIn"} width_icon = {48} height_icon = {48}></Button_bar>
@@ -149,6 +165,7 @@ function Detail( ){
 
 
 export default function Explore_page(){
+    const ImgPath = Fetch_api_attraction_background();
     return(
         <div className = "explore_page">
             <div className = "top">
@@ -158,7 +175,7 @@ export default function Explore_page(){
                 </div>
             </div>
             <div className = "background">
-                <Standard_background img_head = "/chinatown_standard.jpg" detail = {Detail}></Standard_background>
+                <Standard_background img_head = {ImgPath} detail = {Detail}></Standard_background>
                 <div className = "nav_bar">
                     <Choose_nav choose_nav_ = {0}></Choose_nav>
                 </div>
