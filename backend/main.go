@@ -26,6 +26,7 @@ func main() {
 
 	// เรียก routes ทั้งหมด
 	routes.UserRoutes(r)
+	routes.Explore_page_Routes(r)
 
 	// รัน server
 	r.Run(":8080")

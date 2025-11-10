@@ -1,15 +1,96 @@
+"use client";
+
+import { useEffect, useState } from "react"
+import axios from "axios"
 import "./page.css"
 import Image from "next/image"
 import Button_bar from "../component/button"
 import Choose_nav from "../component/navigation_bar"
 import Standard_background from "../component/standard_background"
 
+interface ExploreResponse {
+  detail: string;
+}
+
+// function fetch_api_attraction(){
+//     const [detail, setDetail] = useState<string>("Loading...");
+
+//     useEffect(() => {
+//         const fetchDetail = async () => {
+//         try {
+//             const res = await axios.post<ExploreResponse>("http://localhost:8080/explore");
+//             setDetail(res.data.detail);
+//         } catch (err) {
+//             console.error("Error fetching detail:", err);
+//             setDetail("Failed to load detail.");
+//         }
+//         };
+
+//         fetchDetail();
+//     }, []);
+// }
+
+
 function detail(){
+    const [detail, setDetail] = useState<string>("Loading...");
+
+    useEffect(() => {
+        const fetchDetail = async () => {
+        try {
+            const res = await axios.post<ExploreResponse>("http://localhost:8080/explore");
+            setDetail(res.data.detail);
+        } catch (err) {
+            console.error("Error fetching detail:", err);
+            setDetail("Failed to load detail.");
+        }
+        };
+
+        fetchDetail();
+    }, []);
+
+    const char = Array.from(detail);
+    let word = 0;
+    let content = "";
+    let last_1st_content = "";
+    let last_2nd_content = "";
+    let last_3rd_content = "";
+    // console.log(char[0]);
+
+    for (let i = 0; i < char[0].length; i++) {
+        if (char[0][i] == " ") {
+            word += 1;
+            content += char[0][i];
+            last_1st_content += char[0][i];
+            last_2nd_content += char[0][i];
+            last_3rd_content += char[0][i];
+
+        } 
+        if (char[0][i] != " ") {
+            if ( word <= 30){
+                content += char[0][i];
+            }
+            if ( word > 30 && word <= 31){
+                last_1st_content += char[0][i]
+            }
+            if ( word > 31 && word <= 32){
+                last_2nd_content += char[0][i]
+            }
+            if ( word > 32 && word <= 33){
+                last_3rd_content += char[0][i]
+            }
+        }
+    }
+
+
     return(
 
     <div className = "box">
         <h1>Yaowarat</h1>
-        <h2><span id = "large">Yaowarat</span> is known as <span id = "medium">"Thailand's Chinatown"</span> an old neighborhood rich in Chinese culture. It's famous for its delicious food, <span id = "opa1">especially </span> <span id = "opa2">the </span><span id = "opa3">world-</span></h2>
+        <h2>{content}
+            <span id = "opa1">{last_1st_content}</span>
+            <span id = "opa2">{last_2nd_content}</span>
+            <span id = "opa3">{last_3rd_content}</span>
+        </h2>
         <div className = "more_detail">
             <Image id = "more_detail" src = "/more_detail_icon.png" alt = "more_detail" width = {32} height = {32}></Image>
         </div>
