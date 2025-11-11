@@ -7,6 +7,7 @@ import Image from "next/image"
 import Button_bar from "../component/button"
 import Choose_nav from "../component/navigation_bar"
 import Standard_background from "../component/standard_background"
+import Search_bar from "../component/search";
 
 interface Attraction {
   name: string;
@@ -168,12 +169,7 @@ export default function Explore_page(){
     const ImgPath = Fetch_api_attraction_background();
     return(
         <div className = "explore_page">
-            <div className = "top">
-                <div className = "wrap_search_bar">
-                    <input id = "search_bar" placeholder="Start your Search"></input>
-                    <Image id = "search_icon" src = "/search_icon.png" alt = "search" width = {48.27} height = {48.27}></Image>
-                </div>
-            </div>
+            <Search_bar></Search_bar>
             <div className = "background">
                 <Standard_background img_head = {ImgPath} detail = {Detail}></Standard_background>
                 <div className = "nav_bar">
