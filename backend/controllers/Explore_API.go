@@ -16,9 +16,24 @@ func Attraction_API_Handler(c *gin.Context) {
 		ImgPath  string `json:"img_path"`
 	}
 
+	// รับค่า query จาก frontend
+	var body struct {
+		Query string `json:"query"`
+	}
+
+	if err := c.ShouldBindJSON(&body); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
 	var attractions []Result
 
-	result := db.DB.Model(&models.Attraction{}).Select("name", "location", "detail", "rating", "img_path").Find(&attractions)
+	// filter ตามชื่อสถานที่
+	result := db.DB.Model(&models.Attraction{}).
+		Select("name", "location", "detail", "img_path").
+		Where("LOWER(name) LIKE ?", "%"+body.Query+"%").
+		Find(&attractions)
+
 	if result.Error != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": result.Error.Error()})
 		return

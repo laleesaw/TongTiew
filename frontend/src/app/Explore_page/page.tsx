@@ -20,42 +20,21 @@ interface ExploreResponse {
   status: string;
   data: Attraction[];
 }
-function Fetch_api_attraction_background(){
-    const [img_path, setImg_path] = useState<string>("/waiting.png");
-    useEffect(() => {
-        const fetch_background = async () => {
-        try {
-            const res = await axios.post<ExploreResponse>("http://localhost:8080/explore");
-            setImg_path(res.data.data[0].img_path);
-        } catch (err) {
-            console.error("Error fetching detail:", err);
-            setImg_path("Failed to load detail.");
-        }
-        };
-
-        fetch_background();
-    }, []);
-    return img_path;
+function Fetch_api_attraction_background({attraction}: {attraction: Attraction | null}){
+    if (!attraction){
+        return "/waiting.png";
+    }
+    return attraction.img_path;
 }
 
-function Fetch_api_attraction_Off(){
+
+function Fetch_api_attraction_Off( {attraction}: {attraction: Attraction | null}){
     const [detail, setDetail] = useState<string>("Loading...");
+    if (!attraction) {
+        return "Loading";
+    }
 
-    useEffect(() => {
-        const fetchDetail = async () => {
-        try {
-            const res = await axios.post<ExploreResponse>("http://localhost:8080/explore");
-            setDetail(res.data.data[0].detail);
-        } catch (err) {
-            console.error("Error fetching detail:", err);
-            setDetail("Failed to load detail.");
-        }
-        };
-
-        fetchDetail();
-    }, []);
-
-    const char = Array.from(detail);
+    const char = Array.from(attraction.detail);
     let word = 0;
     let content = "";
     let last_1st_content = "";
@@ -95,43 +74,30 @@ function Fetch_api_attraction_Off(){
             </p>
         </div>
     )
-
 }
-function Fetch_api_attraction_On(){
+function Fetch_api_attraction_On({attraction}: {attraction: Attraction | null}){
     const [detail, setDetail] = useState<string>("Loading...");
-
-    useEffect(() => {
-        const fetchDetail = async () => {
-        try {
-            const res = await axios.post<ExploreResponse>("http://localhost:8080/explore");
-            setDetail(res.data.data[0].detail);
-        } catch (err) {
-            console.error("Error fetching detail:", err);
-            setDetail("Failed to load detail.");
-        }
-        };
-
-        fetchDetail();
-    }, []);
-
+    if (!attraction) {
+        return "Loading";
+    }
     return(
-        <p>
-            {detail}
-        </p>
+        <div>
+            <p>
+                {attraction.detail}
+            </p>
+        </div>
     )
-
 }
 
 
-function Detail_handler(){
+function Detail_handler( {attraction}: {attraction: Attraction | null} ){
     const [show_detail, setShow_detail] = useState(false);
-
     const click_handler = () =>{
         setShow_detail((prev) => !prev)
     }
     return(
         <div>
-            {show_detail? <Fetch_api_attraction_On></Fetch_api_attraction_On>: <Fetch_api_attraction_Off></Fetch_api_attraction_Off>}
+            {show_detail? <Fetch_api_attraction_On attraction={attraction}></Fetch_api_attraction_On>: <Fetch_api_attraction_Off attraction={attraction }></Fetch_api_attraction_Off>}
             <div className = "more_detail">
                 <button className = "button_more_detail" onClick = {click_handler}>
                     <Image id = "more_detail" src = {"/more_detail_icon.png"} alt = "more_detail" width = {32} height = {32}></Image>
@@ -142,36 +108,31 @@ function Detail_handler(){
 }
 
 
-function Detail( ){
-
-
+function Detail( {attraction}: {attraction: Attraction | null} ){
     return(
-
     <div className = "box">
         <h1>Yaowarat</h1>
-        <Detail_handler></Detail_handler>
+        <Detail_handler attraction = {attraction}></Detail_handler>
         <div className = "set_button">
             <Button_bar text = "RESTAURANT" img_link = "/restaurant_icon.png" end_point = {"/SignIn"} width_icon = {48} height_icon = {48}></Button_bar>
             <Button_bar text = "HOTEL" img_link = "/hotel_icon.png" end_point = {"/SignIn"} width_icon = {48} height_icon = {48}></Button_bar>
             <Button_bar text = "LANDMARK" img_link = "/landmark.png" end_point = {"/SignIn"} width_icon = {48} height_icon = {48}></Button_bar>
         </div>
     </div>
-
-
     )
-
-
 }
 
 
 
 export default function Explore_page(){
-    const ImgPath = Fetch_api_attraction_background();
+    const [selectedPlace, setSelectedPlace] = useState<Attraction | null>(null);
+    const ImgPath = Fetch_api_attraction_background({attraction:selectedPlace});
+
     return(
         <div className = "explore_page">
-            <Search_bar></Search_bar>
+            <Search_bar onSelect={setSelectedPlace} ></Search_bar>
             <div className = "background">
-                <Standard_background img_head = {ImgPath} detail = {Detail}></Standard_background>
+                <Standard_background img_head = {ImgPath} detail = { () => <Detail attraction={selectedPlace}></Detail>}></Standard_background>
                 <div className = "nav_bar">
                     <Choose_nav choose_nav_ = {0}></Choose_nav>
                 </div>
@@ -179,4 +140,4 @@ export default function Explore_page(){
 
         </div>
     )
-}
+} 

@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useState } from "react";
 import axios from "axios";
 import { SearchParamsContext } from "next/dist/shared/lib/hooks-client-context.shared-runtime";
+import { trace } from "node:console";
 
 interface Attraction {
   name: string;
@@ -21,9 +22,9 @@ interface ExploreResponse {
 // ✅ Custom hook สำหรับดึงข้อมูลจาก backend
 function useFindFromDatabase() {
   const [attraction, setAttraction] = useState<Attraction[]>([]);
-  // const [ query, setQuery] = useState("");
 
   const fetchAttractionName = async (searchText: string) => {
+    console.log(searchText);
     try {
       const res = await axios.post<ExploreResponse>("http://localhost:8080/explore",{query: searchText,});
       setAttraction(res.data.data);
@@ -35,42 +36,63 @@ function useFindFromDatabase() {
 }
 
 // ✅ Component หลัก
-export default function Search_bar() {
+
+interface search_type {
+  onSelect: (item: Attraction | null) => void;
+}
+
+export default function Search_bar({ onSelect }: search_type) {
   const { attraction, fetchAttractionName } = useFindFromDatabase();
   const [ query, setQuery] = useState("");
-  // console.log(attraction);
+  const [ finish_hint, setFinish_hint] = useState("");
+  const [matched, setMatch] = useState<Attraction | null>(null);
+
 
 
   return (
     <div className="top">
-      <div className="wrap_search_bar">
-        <input
-          id="search_bar"
-          onChange={(e) => setQuery(e.target.value)}
-          placeholder = "Start your search"
-          onClick={() => fetchAttractionName(query)}  // ✅ เรียกฟังก์ชันจาก custom hook
-          onKeyDown={(e) => {
-            if (e.key === "Enter") {
-              fetchAttractionName(query);
+      <div className = "wrap_all">
+        <div className="wrap_search_bar">
+          <input
+            id="search_bar"
+            // onChange={(e) => setQuery(e.target.value)}
+            placeholder = "Start your search"
+            onClick={() => fetchAttractionName(query)}
+            value = {query}
+            onChange = {(e) => {
+              const inputValue = e.target.value;
+              setQuery(inputValue);
               for (let i = 0; i < attraction.length; i++){
-                if (query == attraction[i].name){
-                  alert(query + " is in database");
-                  break;
-                } else {
-                  alert(query + " isn't in database");
-                  break;
+                let hint_attraction = "";
+                for (let j = 0; j < attraction[i].name.length; j++){
+                  hint_attraction += attraction[i].name[j];
+                  if (inputValue === hint_attraction) {
+                    setFinish_hint(attraction[i].name);
+                    setMatch(attraction[i]); // ใช้ Attraction ตัวจริง
+                  }
                 }
               }
-            }
-          }}
-        />
-        <Image
-          id="search_icon"
-          src="/search_icon.png"
-          alt="search"
-          width={48.27}
-          height={48.27}
-        />
+            }}
+            onKeyDown={ (e) => {
+              // console.log(query);
+              if (e.key === "Enter"){
+                fetchAttractionName(query);
+                onSelect(matched);
+                setFinish_hint("");
+              }
+            }}
+          />
+          <Image
+            id="search_icon"
+            src="/search_icon.png"
+            alt="search"
+            width={48.27}
+            height={48.27}
+          />
+        </div>
+        <ul className = {`hint ${finish_hint ? "has-hint" : "no-hint"}`}>
+          {finish_hint}
+        </ul>
       </div>
     </div>
   );
