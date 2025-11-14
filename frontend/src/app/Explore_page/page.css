@@ -64,3 +64,19 @@ p{
     bottom: 0px;
     z-index: 20;
 }
+
+.not_attraction {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+}
+
+
+.not_attraction p{
+    color: #ED7D31;
+    font-size: 40px;
+    margin-top: 10px;
+    width: auto;
+}

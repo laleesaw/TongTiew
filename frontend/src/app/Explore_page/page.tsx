@@ -22,7 +22,7 @@ interface ExploreResponse {
 }
 function Fetch_api_attraction_background({attraction}: {attraction: Attraction | null}){
     if (!attraction){
-        return "/waiting.png";
+        return "/welcome_to_tongtiew.png";
     }
     return attraction.img_path;
 }
@@ -31,7 +31,7 @@ function Fetch_api_attraction_background({attraction}: {attraction: Attraction |
 function Fetch_api_attraction_Off( {attraction}: {attraction: Attraction | null}){
     const [detail, setDetail] = useState<string>("Loading...");
     if (!attraction) {
-        return "Loading";
+        return "Type a location name to start exploring";
     }
 
     const char = Array.from(attraction.detail);
@@ -78,7 +78,7 @@ function Fetch_api_attraction_Off( {attraction}: {attraction: Attraction | null}
 function Fetch_api_attraction_On({attraction}: {attraction: Attraction | null}){
     const [detail, setDetail] = useState<string>("Loading...");
     if (!attraction) {
-        return "Loading";
+        return "Type a location name to start exploring";
     }
     return(
         <div>
@@ -109,9 +109,22 @@ function Detail_handler( {attraction}: {attraction: Attraction | null} ){
 
 
 function Detail( {attraction}: {attraction: Attraction | null} ){
+    if (!attraction){
+        return(
+        <div className = "box">
+            <div className = "not_attraction"><p>Explore</p><p>for Attraction</p></div>
+            <Detail_handler attraction = {attraction}></Detail_handler>
+            <div className = "set_button">
+                <Button_bar text = "RESTAURANT" img_link = "/restaurant_icon.png" end_point = {"/SignIn"} width_icon = {48} height_icon = {48}></Button_bar>
+                <Button_bar text = "HOTEL" img_link = "/hotel_icon.png" end_point = {"/SignIn"} width_icon = {48} height_icon = {48}></Button_bar>
+                <Button_bar text = "LANDMARK" img_link = "/landmark.png" end_point = {"/SignIn"} width_icon = {48} height_icon = {48}></Button_bar>
+            </div>
+        </div>
+        )
+    }
     return(
     <div className = "box">
-        <h1>Yaowarat</h1>
+        <h1>{attraction.name}</h1>
         <Detail_handler attraction = {attraction}></Detail_handler>
         <div className = "set_button">
             <Button_bar text = "RESTAURANT" img_link = "/restaurant_icon.png" end_point = {"/SignIn"} width_icon = {48} height_icon = {48}></Button_bar>
