@@ -13,8 +13,8 @@ interface input_bar_type{
 function Navigate_to({img_link, name, width_nav, height_nav}: input_bar_type){
     return(
         <div className = "nav_to">
-            <Image alt = "nav" src = {img_link} width = {width_nav} height = {height_nav}></Image>
-            <p>{name}</p>
+            <Image id = "img" alt = "nav" src = {img_link} width = {width_nav} height = {height_nav}></Image>
+            <p className = "page_name">{name}</p>
         </div>
     )
 }

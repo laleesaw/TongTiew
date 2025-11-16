@@ -4,8 +4,6 @@ import "./search.css";
 import Image from "next/image";
 import { useState } from "react";
 import axios from "axios";
-import { SearchParamsContext } from "next/dist/shared/lib/hooks-client-context.shared-runtime";
-import { trace } from "node:console";
 
 interface Attraction {
   name: string;

@@ -8,6 +8,8 @@ import Button_bar from "../component/button"
 import Choose_nav from "../component/navigation_bar"
 import Standard_background from "../component/standard_background"
 import Search_bar from "../component/search";
+import { useRouter } from "next/navigation";
+
 
 interface Attraction {
   name: string;
@@ -20,6 +22,8 @@ interface ExploreResponse {
   status: string;
   data: Attraction[];
 }
+
+
 function Fetch_api_attraction_background({attraction}: {attraction: Attraction | null}){
     if (!attraction){
         return "/welcome_to_tongtiew.png";
@@ -115,7 +119,7 @@ function Detail( {attraction}: {attraction: Attraction | null} ){
             <div className = "not_attraction"><p>Explore</p><p>for Attraction</p></div>
             <Detail_handler attraction = {attraction}></Detail_handler>
             <div className = "set_button">
-                <Button_bar text = "RESTAURANT" img_link = "/restaurant_icon.png" end_point = {"/SignIn"} width_icon = {48} height_icon = {48}></Button_bar>
+                <Button_bar text = "RESTAURANT" img_link = "/restaurant_icon.png" end_point = {"/Restaurant_page"} width_icon = {48} height_icon = {48}></Button_bar>
                 <Button_bar text = "HOTEL" img_link = "/hotel_icon.png" end_point = {"/SignIn"} width_icon = {48} height_icon = {48}></Button_bar>
                 <Button_bar text = "LANDMARK" img_link = "/landmark.png" end_point = {"/SignIn"} width_icon = {48} height_icon = {48}></Button_bar>
             </div>
@@ -127,7 +131,7 @@ function Detail( {attraction}: {attraction: Attraction | null} ){
         <h1>{attraction.name}</h1>
         <Detail_handler attraction = {attraction}></Detail_handler>
         <div className = "set_button">
-            <Button_bar text = "RESTAURANT" img_link = "/restaurant_icon.png" end_point = {"/SignIn"} width_icon = {48} height_icon = {48}></Button_bar>
+            <Button_bar text = "RESTAURANT" img_link = "/restaurant_icon.png" end_point = {"/Restaurant"} width_icon = {48} height_icon = {48}></Button_bar>
             <Button_bar text = "HOTEL" img_link = "/hotel_icon.png" end_point = {"/SignIn"} width_icon = {48} height_icon = {48}></Button_bar>
             <Button_bar text = "LANDMARK" img_link = "/landmark.png" end_point = {"/SignIn"} width_icon = {48} height_icon = {48}></Button_bar>
         </div>

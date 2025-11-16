@@ -11,7 +11,6 @@
 }
 
 
-
 .nav_to{
     display: flex;
     align-items: center;
@@ -19,7 +18,14 @@
     width: 88px;
     height: 88px;
     flex-direction: column;
+    /* background-color: bisque; */
 }
-p{
+.page_name{
+    position: absolute;
     color: #4F4A45;
+    /* background-color: aqua; */
+    width: auto;
+    height: auto;
+    margin-top: 55px;
+    /* padding-top: 14px; */
 }
