@@ -6,6 +6,7 @@ import { useState } from "react";
 import axios from "axios";
 
 interface Attraction {
+  id: number;
   name: string;
   location: string;
   detail: string;
@@ -43,6 +44,7 @@ export default function Search_bar({ onSelect }: search_type) {
   const { attraction, fetchAttractionName } = useFindFromDatabase();
   const [ query, setQuery] = useState("");
   const [ finish_hint, setFinish_hint] = useState("");
+  const [ finish_hint_id, setFinish_hint_id] = useState(0);
   const [matched, setMatch] = useState<Attraction | null>(null);
 
 
@@ -60,12 +62,16 @@ export default function Search_bar({ onSelect }: search_type) {
             onChange = {(e) => {
               const inputValue = e.target.value;
               setQuery(inputValue);
+              fetchAttractionName(inputValue);
+              console.log(attraction);
               for (let i = 0; i < attraction.length; i++){
                 let hint_attraction = "";
                 for (let j = 0; j < attraction[i].name.length; j++){
                   hint_attraction += attraction[i].name[j];
                   if (inputValue === hint_attraction) {
                     setFinish_hint(attraction[i].name);
+                    // setFinish_hint_id(attraction[i].id);
+                    // console.log(attraction[i].id);
                     setMatch(attraction[i]); // ใช้ Attraction ตัวจริง
                   }
                 }
@@ -76,7 +82,7 @@ export default function Search_bar({ onSelect }: search_type) {
               if (e.key === "Enter"){
                 fetchAttractionName(query);
                 onSelect(matched);
-                setFinish_hint("");
+                // setFinish_hint("abc");
               }
             }}
           />

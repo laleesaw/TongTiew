@@ -12,6 +12,7 @@ import { useRouter } from "next/navigation";
 
 
 interface Attraction {
+  id: number;
   name: string;
   location: string;
   detail: string;
@@ -30,6 +31,13 @@ function Fetch_api_attraction_background({attraction}: {attraction: Attraction |
     }
     return attraction.img_path;
 }
+
+// function Fetch_api_attraction_id({attraction}: {attraction: Attraction | null}){
+//     if (!attraction){
+//         return 0;
+//     }
+//     return attraction.id;
+// }
 
 
 function Fetch_api_attraction_Off( {attraction}: {attraction: Attraction | null}){
@@ -99,6 +107,7 @@ function Detail_handler( {attraction}: {attraction: Attraction | null} ){
     const click_handler = () =>{
         setShow_detail((prev) => !prev)
     }
+
     return(
         <div>
             {show_detail? <Fetch_api_attraction_On attraction={attraction}></Fetch_api_attraction_On>: <Fetch_api_attraction_Off attraction={attraction }></Fetch_api_attraction_Off>}
@@ -119,9 +128,9 @@ function Detail( {attraction}: {attraction: Attraction | null} ){
             <div className = "not_attraction"><p>Explore</p><p>for Attraction</p></div>
             <Detail_handler attraction = {attraction}></Detail_handler>
             <div className = "set_button">
-                <Button_bar text = "RESTAURANT" img_link = "/restaurant_icon.png" end_point = {"/Restaurant_page"} width_icon = {48} height_icon = {48}></Button_bar>
-                <Button_bar text = "HOTEL" img_link = "/hotel_icon.png" end_point = {"/SignIn"} width_icon = {48} height_icon = {48}></Button_bar>
-                <Button_bar text = "LANDMARK" img_link = "/landmark.png" end_point = {"/SignIn"} width_icon = {48} height_icon = {48}></Button_bar>
+                <Button_bar text = "RESTAURANT" img_link = "/restaurant_icon.png" end_point = {"/Restaurant_page"} width_icon = {48} height_icon = {48} attraction_id = {0}></Button_bar>
+                <Button_bar text = "HOTEL" img_link = "/hotel_icon.png" end_point = {"/SignIn"} width_icon = {48} height_icon = {48} attraction_id = {0}></Button_bar>
+                <Button_bar text = "LANDMARK" img_link = "/landmark.png" end_point = {"/SignIn"} width_icon = {48} height_icon = {48} attraction_id = {0}></Button_bar>
             </div>
         </div>
         )
@@ -131,9 +140,9 @@ function Detail( {attraction}: {attraction: Attraction | null} ){
         <h1>{attraction.name}</h1>
         <Detail_handler attraction = {attraction}></Detail_handler>
         <div className = "set_button">
-            <Button_bar text = "RESTAURANT" img_link = "/restaurant_icon.png" end_point = {"/Restaurant"} width_icon = {48} height_icon = {48}></Button_bar>
-            <Button_bar text = "HOTEL" img_link = "/hotel_icon.png" end_point = {"/SignIn"} width_icon = {48} height_icon = {48}></Button_bar>
-            <Button_bar text = "LANDMARK" img_link = "/landmark.png" end_point = {"/SignIn"} width_icon = {48} height_icon = {48}></Button_bar>
+            <Button_bar text = "RESTAURANT" img_link = "/restaurant_icon.png" end_point = {"/Restaurant_page"} width_icon = {48} height_icon = {48} attraction_id = {attraction.id}></Button_bar>
+            <Button_bar text = "HOTEL" img_link = "/hotel_icon.png" end_point = {"/SignIn"} width_icon = {48} height_icon = {48} attraction_id = {attraction.id}></Button_bar>
+            <Button_bar text = "LANDMARK" img_link = "/landmark.png" end_point = {"/SignIn"} width_icon = {48} height_icon = {48} attraction_id = {attraction.id}></Button_bar>
         </div>
     </div>
     )
@@ -144,7 +153,8 @@ function Detail( {attraction}: {attraction: Attraction | null} ){
 export default function Explore_page(){
     const [selectedPlace, setSelectedPlace] = useState<Attraction | null>(null);
     const ImgPath = Fetch_api_attraction_background({attraction:selectedPlace});
-
+    // const Attraction_id = Fetch_api_attraction_id({attraction:selectedPlace});
+    // console.log(Attraction_id);
     return(
         <div className = "explore_page">
             <Search_bar onSelect={setSelectedPlace} ></Search_bar>

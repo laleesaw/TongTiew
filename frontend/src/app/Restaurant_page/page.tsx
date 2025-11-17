@@ -1,7 +1,9 @@
+"use client"
+
 import "./page.css"
 import Image from "next/image"
 import Choose_nav from "../component/navigation_bar"
-import Search_bar from "../component/search";
+import { useSearchParams } from "next/navigation";
 // import { useEffect, useState } from "react"
 
 
@@ -31,6 +33,9 @@ interface A_card_type{
     rating: number;
     detail: string;
 }
+
+
+
 
 
 function A_Card({src, name, rating, detail}: A_card_type){
@@ -81,6 +86,9 @@ function Display_card(){
     
 }
 export default function Restaurant_page(){
+    const params = useSearchParams();
+    const attraction_id = params.get("attraction_id");
+    console.log(attraction_id);
     return(
         <div className = "wishlists">
             <Display_card></Display_card>

@@ -10,6 +10,7 @@ import (
 
 func Attraction_API_Handler(c *gin.Context) {
 	type Result struct {
+		Id       int    `json:"id"`
 		Name     string `json:"name"`
 		Location string `json:"location"`
 		Detail   string `json:"detail"`
@@ -30,7 +31,7 @@ func Attraction_API_Handler(c *gin.Context) {
 
 	// filter ตามชื่อสถานที่
 	result := db.DB.Model(&models.Attraction{}).
-		Select("name", "location", "detail", "img_path").
+		Select("id", "name", "location", "detail", "img_path").
 		Where("LOWER(name) LIKE ?", "%"+body.Query+"%").
 		Find(&attractions)
 
