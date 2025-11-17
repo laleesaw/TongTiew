@@ -4,7 +4,8 @@ import "./page.css"
 import Image from "next/image"
 import Choose_nav from "../component/navigation_bar"
 import { useSearchParams } from "next/navigation";
-// import { useEffect, useState } from "react"
+import axios from "axios";
+import { useEffect, useState } from "react"
 
 
 // function Fetch_api_restaurant_img({attraction}: {attraction: Attraction | null}){
@@ -16,25 +17,38 @@ import { useSearchParams } from "next/navigation";
 
 
 
-interface Attraction {
+interface Restaurant {
   name: string;
   location: string;
+  rating: string;
   detail: string;
   img_path: string;
 }
 
 interface ExploreResponse {
   status: string;
-  data: Attraction[];
+  data: Restaurant[];
 }
 interface A_card_type{
     src: string;
     name: string;
-    rating: number;
+    rating: string;
     detail: string;
 }
 
-
+function useFindFromDatabase() {
+  const [restaurant, setRestaurant] = useState<Restaurant[]>([]);
+  const fetchRestaurant_Attraction_id = async (search_number: number) => {
+    console.log(search_number);
+    try {
+      const res = await axios.post<ExploreResponse>("http://localhost:8080/restaurant",{Restaurant_id: search_number,});
+      setRestaurant(res.data.data);
+    } catch (err) {
+      console.error("Error fetching restaurant:", err);
+    }
+  };
+  return { restaurant, fetchRestaurant_Attraction_id };
+}
 
 
 
@@ -60,19 +74,43 @@ function A_Card({src, name, rating, detail}: A_card_type){
     )
 }
 function Display_card(){
-    // console.log(attraction);
-    let total_restautant = ["Yaowarat","Yaowarat","Yaowarat","Yaowarat","Yaowarat","Yaowarat"];
-    let total_src = ["/chinatown_standard.jpg", "/chinatown_standard.jpg", "/chinatown_standard.jpg", "/chinatown_standard.jpg", "/chinatown_standard.jpg", "/chinatown_standard.jpg"]
-    let total_rating = [4.5, 4.5, 4.5, 4.5, 4.5, 4.5]
-    let total_detail = ["Yaowarat</span> is known as Thailand's Chinatown an old neighborhood rich in Chinese culture. It's famous for its delicious food, especially world-",
-        "Yaowarat</span> is known as Thailand's Chinatown an old neighborhood rich in Chinese culture. It's famous for its delicious food, especially world-",
-        "Yaowarat</span> is known as Thailand's Chinatown an old neighborhood rich in Chinese culture. It's famous for its delicious food, especially world-",
-        "Yaowarat</span> is known as Thailand's Chinatown an old neighborhood rich in Chinese culture. It's famous for its delicious food, especially world-",
-        "Yaowarat</span> is known as Thailand's Chinatown an old neighborhood rich in Chinese culture. It's famous for its delicious food, especially world-",
-        "Yaowarat</span> is known as Thailand's Chinatown an old neighborhood rich in Chinese culture. It's famous for its delicious food, especially world-"
-    ]
+
+
+
+    const {restaurant, fetchRestaurant_Attraction_id} = useFindFromDatabase();
+    const params = useSearchParams();
+    const attraction_id = params.get("attraction_id");
+    let temp_id = 0;
+    if (attraction_id === null){
+        temp_id = 0;
+    }
+    useEffect(() => {
+        fetchRestaurant_Attraction_id(temp_id);
+    }, [])
+    // console.log(restaurant[0].img_path);
+
+
+    let total_restautant: string[] = [];
+    let total_src: string[] = [];
+    let total_rating: string[] = []; 
+    let total_detail: string[] = [];
+    for( let i = 0; i < restaurant.length; i++){
+        total_restautant.push(restaurant[i].name);
+        total_src.push(restaurant[i].img_path);
+        total_rating.push(restaurant[i].rating);
+        total_detail.push(restaurant[i].detail);
+    }
+    // let total_src = ["/chinatown_standard.jpg", "/chinatown_standard.jpg", "/chinatown_standard.jpg", "/chinatown_standard.jpg", "/chinatown_standard.jpg", "/chinatown_standard.jpg"]
+    // let total_rating = [4.5, 4.5, 4.5, 4.5, 4.5, 4.5]
+    // let total_detail = ["Yaowarat</span> is known as Thailand's Chinatown an old neighborhood rich in Chinese culture. It's famous for its delicious food, especially world-",
+    //     "Yaowarat</span> is known as Thailand's Chinatown an old neighborhood rich in Chinese culture. It's famous for its delicious food, especially world-",
+    //     "Yaowarat</span> is known as Thailand's Chinatown an old neighborhood rich in Chinese culture. It's famous for its delicious food, especially world-",
+    //     "Yaowarat</span> is known as Thailand's Chinatown an old neighborhood rich in Chinese culture. It's famous for its delicious food, especially world-",
+    //     "Yaowarat</span> is known as Thailand's Chinatown an old neighborhood rich in Chinese culture. It's famous for its delicious food, especially world-",
+    //     "Yaowarat</span> is known as Thailand's Chinatown an old neighborhood rich in Chinese culture. It's famous for its delicious food, especially world-"
+    // ]
     return(
-        <div>
+        <div className = "display_card">
             {total_restautant.map((name, i) => (
                 <A_Card 
                 key = {i}
@@ -86,11 +124,11 @@ function Display_card(){
     
 }
 export default function Restaurant_page(){
-    const params = useSearchParams();
-    const attraction_id = params.get("attraction_id");
-    console.log(attraction_id);
     return(
-        <div className = "wishlists">
+        <div className = "page">
+            <div className = "back_to_explore">
+                <Image id = "back_to_explore" src = "/back_to_explore.png" alt = "back" width = {263.27} height={53}></Image>
+            </div>
             <Display_card></Display_card>
             <div className = "nav_bar">
                 <Choose_nav choose_nav_ = {0}></Choose_nav>

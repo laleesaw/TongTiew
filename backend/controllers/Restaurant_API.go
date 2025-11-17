@@ -22,7 +22,7 @@ func Restaurant_API_Handler(c *gin.Context) {
 
 	// รับค่า query จาก frontend
 	var body struct {
-		Query string `json:"query"`
+		Restaurant_id string `json:"query"`
 	}
 
 	if err := c.ShouldBindJSON(&body); err != nil {
@@ -35,7 +35,7 @@ func Restaurant_API_Handler(c *gin.Context) {
 	result := db.DB.Model(&models.Restaurant{}).
 		Select("restaurant.id, restaurant.name, restaurant.rating, restaurant.detail, restaurant.img_path, restaurant.attraction_id").
 		Joins("JOIN attraction ON attraction.id = restaurant.attraction_id").
-		Where("LOWER(attraction.name) LIKE ?", "%"+strings.ToLower(body.Query)+"%").
+		Where("LOWER(attraction.name) LIKE ?", "%"+strings.ToLower(body.Restaurant_id)+"%").
 		Find(&restaurants)
 
 	if result.Error != nil {
