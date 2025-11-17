@@ -11,6 +11,11 @@
     color: #4F4A45;
 }
 
+.back{
+    width: 100%;
+    height: auto;
+    padding-left: 0px;
+}
 
 .back_to_explore{
     margin-top: 0px;
@@ -23,6 +28,7 @@
     z-index: 1000;
     background-color: #F6F1EE;
 }
+
 
 .display_card{
     margin-top: 100px;

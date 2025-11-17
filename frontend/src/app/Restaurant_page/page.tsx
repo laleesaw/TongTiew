@@ -6,7 +6,7 @@ import Choose_nav from "../component/navigation_bar"
 import { useSearchParams } from "next/navigation";
 import axios from "axios";
 import { useEffect, useState } from "react"
-
+import Link from "next/link";
 
 // function Fetch_api_restaurant_img({attraction}: {attraction: Attraction | null}){
 //     if (!attraction){
@@ -126,9 +126,11 @@ function Display_card(){
 export default function Restaurant_page(){
     return(
         <div className = "page">
-            <div className = "back_to_explore">
-                <Image id = "back_to_explore" src = "/back_to_explore.png" alt = "back" width = {263.27} height={53}></Image>
-            </div>
+            <Link className = "back" href = "/Explore_page">
+                <div className = "back_to_explore">
+                    <Image id = "back_to_explore" src = "/back_to_explore.png" alt = "back" width = {263.27} height={53}></Image>
+                </div>
+            </Link>
             <Display_card></Display_card>
             <div className = "nav_bar">
                 <Choose_nav choose_nav_ = {0}></Choose_nav>
