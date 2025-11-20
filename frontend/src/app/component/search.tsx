@@ -2,7 +2,7 @@
 
 import "./search.css";
 import Image from "next/image";
-import { useState } from "react";
+import { use, useState } from "react";
 import axios from "axios";
 
 interface Attraction {
@@ -23,7 +23,7 @@ function useFindFromDatabase() {
   const [attraction, setAttraction] = useState<Attraction[]>([]);
 
   const fetchAttractionName = async (searchText: string) => {
-    console.log(searchText);
+    // console.log(searchText);
     try {
       const res = await axios.post<ExploreResponse>("http://localhost:8080/explore",{query: searchText,});
       setAttraction(res.data.data);
@@ -44,8 +44,8 @@ export default function Search_bar({ onSelect }: search_type) {
   const { attraction, fetchAttractionName } = useFindFromDatabase();
   const [ query, setQuery] = useState("");
   const [ finish_hint, setFinish_hint] = useState("");
-  const [ finish_hint_id, setFinish_hint_id] = useState(0);
-  const [matched, setMatch] = useState<Attraction | null>(null);
+  const [ matched, setMatch] = useState<Attraction | null>(null);
+  const [ state_count, set_state_count] = useState(0);
 
 
 
@@ -55,7 +55,6 @@ export default function Search_bar({ onSelect }: search_type) {
         <div className="wrap_search_bar">
           <input
             id="search_bar"
-            // onChange={(e) => setQuery(e.target.value)}
             placeholder = "Start your search"
             onClick={() => fetchAttractionName(query)}
             value = {query}
@@ -64,25 +63,29 @@ export default function Search_bar({ onSelect }: search_type) {
               setQuery(inputValue);
               fetchAttractionName(inputValue);
               console.log(attraction);
-              for (let i = 0; i < attraction.length; i++){
-                let hint_attraction = "";
-                for (let j = 0; j < attraction[i].name.length; j++){
-                  hint_attraction += attraction[i].name[j];
-                  if (inputValue === hint_attraction) {
-                    setFinish_hint(attraction[i].name);
-                    // setFinish_hint_id(attraction[i].id);
-                    // console.log(attraction[i].id);
-                    setMatch(attraction[i]); // ใช้ Attraction ตัวจริง
+              if ( query.length == 0){
+                set_state_count(1);
+                for (let i = 0; i < attraction.length; i++){
+                  let hint_attraction = "";
+                  for (let j = 0; j < attraction[i].name.length; j++){
+                    hint_attraction += attraction[i].name[j];
+                    if (inputValue === hint_attraction) {
+                      setFinish_hint(attraction[i].name);
+                      setMatch(attraction[i]);
+                    }
                   }
                 }
               }
+              if( state_count == 1 && inputValue.length == 0){
+                setFinish_hint("");
+                set_state_count(0);
+              }
             }}
             onKeyDown={ (e) => {
-              // console.log(query);
               if (e.key === "Enter"){
                 fetchAttractionName(query);
                 onSelect(matched);
-                // setFinish_hint("abc");
+                setFinish_hint("");
               }
             }}
           />
