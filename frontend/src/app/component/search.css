@@ -63,13 +63,30 @@
     margin-left: 8px;
 }
 .hint{
-    padding-left: 31px;
-    /* padding-bottom: 29px; */
+    display: flex;
+    padding-left: 0px;
     transition: padding-bottom 0.3s;
+    /* background-color: rgba(79, 74, 69, 0.3); */
+    background: none;
+    /* backdrop-filter: blur(4); */
+    border: none;
 }
 .hint.no-hint{
-    padding-bottom: 0px;
+    opacity: 0;
 }
 .hint.has-hint{
     padding-bottom: 29px;
 }
+.content{
+    margin-left: 31px;
+    font-size: 24px;
+    width: auto;
+    /* background-color: aqua; */
+}
+.content.no-content{
+    font-size: 0px;
+    padding-bottom: 0px;
+}
+/* .content.has-content{
+    margin-top: 14px;
+} */

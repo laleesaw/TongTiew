@@ -46,16 +46,16 @@ export default function Search_bar({ onSelect }: search_type) {
   const [ query, setQuery] = useState("");
   const [ finish_hint, setFinish_hint] = useState("");
   const [ matched, setMatch] = useState<Attraction | null>(null);
+  const [ found, setfound] = useState("");
 
   useEffect(() => { 
-    let found = "";
     for( let i = 0; i < attraction.length; i++){
       let hint = "";
       for( let j = 0; j < attraction[i].name.length; j++){
         hint += attraction[i].name[j];
         if(query.toLowerCase() == hint.toLowerCase()){
           console.log(hint);
-          found = attraction[i].name;
+          setfound(attraction[i].name);
           setMatch(attraction[i]);
         }
       }
@@ -93,9 +93,14 @@ export default function Search_bar({ onSelect }: search_type) {
             height={48.27}
           />
         </div>
-        <ul className = {`hint ${finish_hint ? "has-hint" : "no-hint"}`}>
-          {finish_hint}
-        </ul>
+        <button className = {`hint ${finish_hint ? "has-hint" : "no-hint"}`} 
+         onClick={() => {
+          onSelect(matched);
+          setFinish_hint("");
+        }
+         }>
+          <span className = {`content ${finish_hint ? "has-content" : "no-content"}`}>{finish_hint}</span>
+        </button>
       </div>
     </div>
   );
