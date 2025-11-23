@@ -2,8 +2,9 @@
 
 import "./search.css";
 import Image from "next/image";
-import { use, useState } from "react";
+import { use, useEffect, useState } from "react";
 import axios from "axios";
+
 
 interface Attraction {
   id: number;
@@ -45,9 +46,22 @@ export default function Search_bar({ onSelect }: search_type) {
   const [ query, setQuery] = useState("");
   const [ finish_hint, setFinish_hint] = useState("");
   const [ matched, setMatch] = useState<Attraction | null>(null);
-  const [ state_count, set_state_count] = useState(0);
 
-
+  useEffect(() => { 
+    let found = "";
+    for( let i = 0; i < attraction.length; i++){
+      let hint = "";
+      for( let j = 0; j < attraction[i].name.length; j++){
+        hint += attraction[i].name[j];
+        if(query.toLowerCase() == hint.toLowerCase()){
+          console.log(hint);
+          found = attraction[i].name;
+          setMatch(attraction[i]);
+        }
+      }
+    }
+    setFinish_hint(found);
+  },[query])
 
   return (
     <div className="top">
@@ -61,26 +75,8 @@ export default function Search_bar({ onSelect }: search_type) {
             onChange = {(e) => {
               const inputValue = e.target.value;
               setQuery(inputValue);
-              fetchAttractionName(inputValue);
-              console.log(attraction);
-              if ( query.length == 0){
-                set_state_count(1);
-                for (let i = 0; i < attraction.length; i++){
-                  let hint_attraction = "";
-                  for (let j = 0; j < attraction[i].name.length; j++){
-                    hint_attraction += attraction[i].name[j];
-                    if (inputValue === hint_attraction) {
-                      setFinish_hint(attraction[i].name);
-                      setMatch(attraction[i]);
-                    }
-                  }
                 }
               }
-              if( state_count == 1 && inputValue.length == 0){
-                setFinish_hint("");
-                set_state_count(0);
-              }
-            }}
             onKeyDown={ (e) => {
               if (e.key === "Enter"){
                 fetchAttractionName(query);
