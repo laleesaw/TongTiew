@@ -46,21 +46,23 @@ export default function Search_bar({ onSelect }: search_type) {
   const [ query, setQuery] = useState("");
   const [ finish_hint, setFinish_hint] = useState("");
   const [ matched, setMatch] = useState<Attraction | null>(null);
-  const [ found, setfound] = useState("");
+  // const [ found, setfound] = useState("");
 
   useEffect(() => { 
+    let find = "";
     for( let i = 0; i < attraction.length; i++){
       let hint = "";
       for( let j = 0; j < attraction[i].name.length; j++){
         hint += attraction[i].name[j];
         if(query.toLowerCase() == hint.toLowerCase()){
           console.log(hint);
-          setfound(attraction[i].name);
+          // setfound(attraction[i].name);
+          find = attraction[i].name;
           setMatch(attraction[i]);
         }
       }
     }
-    setFinish_hint(found);
+    setFinish_hint(find);
   },[query])
 
   return (
