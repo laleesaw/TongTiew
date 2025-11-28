@@ -129,7 +129,7 @@ function Detail( {attraction}: {attraction: Attraction | null} ){
             <Detail_handler attraction = {attraction}></Detail_handler>
             <div className = "set_button">
                 <Button_bar text = "RESTAURANT" img_link = "/restaurant_icon.png" end_point = {"/Restaurant_page"} width_icon = {48} height_icon = {48} attraction_id = {0}></Button_bar>
-                <Button_bar text = "HOTEL" img_link = "/hotel_icon.png" end_point = {"/SignIn"} width_icon = {48} height_icon = {48} attraction_id = {0}></Button_bar>
+                <Button_bar text = "HOTEL" img_link = "/hotel_icon.png" end_point = {"/Hotel_page"} width_icon = {48} height_icon = {48} attraction_id = {0}></Button_bar>
                 <Button_bar text = "LANDMARK" img_link = "/landmark.png" end_point = {"/SignIn"} width_icon = {48} height_icon = {48} attraction_id = {0}></Button_bar>
             </div>
         </div>

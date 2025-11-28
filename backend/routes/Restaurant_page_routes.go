@@ -7,5 +7,5 @@ import (
 )
 
 func Restaurant_page_Routes(r *gin.Engine) {
-	r.POST("/restaurant", controllers.Restaurant_API_Handler)
+	r.POST("/restaurant", controllers.RestaurantAPIHandler)
 }

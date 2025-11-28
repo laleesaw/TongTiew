@@ -8,41 +8,37 @@ import { useEffect, useState } from "react"
 import Link from "next/link";
 
 
-interface Restaurant {
+interface Hotel {
   name: string;
-  location: string;
   rating: string;
-  detail: string;
   img_path: string;
 }
 interface A_card_type{
     src: string;
     name: string;
     rating: string;
-    detail: string;
 }
 
 function useFindFromDatabase() {
-    const [restaurant, setRestaurant] = useState<Restaurant[]>([]);
-    const fetchRestaurant_Attraction_id = async ( search_number: number) => {
+    const [hotel, setHotel] = useState<Hotel[]>([]);
+    const fetchHotel_Attraction_id = async ( search_number: number) => {
         try{
-            const res = await fetch("http://localhost:8080/restaurant",{
+            const res = await fetch("http://localhost:8080/hotel",{
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
-                body: JSON.stringify({Restaurant_id: search_number}),
+                body: JSON.stringify({Hotel_id: search_number}),
             })
-
             const data = await res.json();
-            setRestaurant(data.data);
+            setHotel(data.data);
         } catch (err) {
-        console.error("Error fetching restaurant", err);
+        console.error("Error fetching hotel", err);
     }};
-  return { restaurant, fetchRestaurant_Attraction_id };
+  return { hotel, fetchHotel_Attraction_id };
 } 
 
 
 
-function A_Card({src, name, rating, detail}: A_card_type){
+function A_Card({src, name, rating}: A_card_type){
     return(
             <div className = "card">
                 <div className = "img_place">
@@ -56,15 +52,15 @@ function A_Card({src, name, rating, detail}: A_card_type){
                         </div>{rating}
                     </div>
                 </div>
-                <h2 className = "detail">{detail}</h2>
-                <div className = "more_detail">
+                {/* <h2 className = "detail">{detail}</h2> */}
+                {/* <div className = "more_detail">
                     <Image id = "more_detail" src = "/more_detail_icon.png" alt = "more_detail" width = {32} height = {32}></Image>
-                </div>
+                </div> */}
             </div>
     )
 }
 function Display_card(){
-    const {restaurant, fetchRestaurant_Attraction_id} = useFindFromDatabase();
+    const {hotel, fetchHotel_Attraction_id} = useFindFromDatabase();
     const params = useSearchParams();
     const attraction_id = params.get("attraction_id");
     let temp_id = 0;
@@ -72,35 +68,32 @@ function Display_card(){
         temp_id = 0;
     }
     useEffect(() => {
-        fetchRestaurant_Attraction_id(temp_id);
+        fetchHotel_Attraction_id(temp_id);
     }, [])
 
 
-    let total_restautant: string[] = [];
+    let total_hotel: string[] = [];
     let total_src: string[] = [];
     let total_rating: string[] = []; 
-    let total_detail: string[] = [];
-    for( let i = 0; i < restaurant.length; i++){
-        total_restautant.push(restaurant[i].name);
-        total_src.push(restaurant[i].img_path);
-        total_rating.push(restaurant[i].rating);
-        total_detail.push(restaurant[i].detail);
+    for( let i = 0; i < hotel.length; i++){
+        total_hotel.push(hotel[i].name);
+        total_src.push(hotel[i].img_path);
+        total_rating.push(hotel[i].rating);
     }
     return(
         <div className = "display_card">
-            {total_restautant.map((name, i) => (
+            {total_hotel.map((name, i) => (
                 <A_Card 
                 key = {i}
                 src = {total_src[i]}
-                name = {total_restautant[i]}
-                rating = {total_rating[i]}
-                detail = {total_detail[i]}></A_Card>
+                name = {total_hotel[i]}
+                rating = {total_rating[i]}></A_Card>
             ))}
         </div>
     )
     
 }
-export default function Restaurant_page(){
+export default function Hotel_page(){
     return(
         <div className = "page">
             <Link className = "back" href = "/Explore_page">
