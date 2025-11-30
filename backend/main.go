@@ -29,6 +29,7 @@ func main() {
 	routes.Explore_page_Routes(r)
 	routes.Restaurant_page_Routes(r)
 	routes.Hotel_page_Routes(r)
+	routes.Landmark_page_Routes(r)
 
 	// รัน server
 	r.Run(":8080")

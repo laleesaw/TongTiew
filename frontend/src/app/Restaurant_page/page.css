@@ -89,24 +89,8 @@ h2{
     margin-top: 22px;
     font-size: 16px;
 }
-#span1{
-    font-size: 24px;
-}
-#span2{
-    font-size: 18px;
-}
-#span3{
-    opacity: 0.75;
-}
-#span4{
-    opacity: 0.5;
-}
-#span5{
-    opacity: 0.25;
-}
-.more_detail{
-    display: flex;
-    justify-content: center;
+.detail{
+    margin-bottom: 21px;
 }
 .nav_bar{
     background-color: #F6F1EE;

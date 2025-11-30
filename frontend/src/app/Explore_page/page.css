@@ -35,12 +35,15 @@ p{
 }
 #opa1{
     opacity: 0.75;
+    color: #4F4A45;
 }
 #opa2{
     opacity: 0.5;
+    color: #4F4A45;
 }
 #opa3{
     opacity: 0.25;
+    color: #4F4A45;
 }
 .more_detail{
     display: flex;

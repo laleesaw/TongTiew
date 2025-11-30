@@ -6,6 +6,7 @@ import Choose_nav from "../component/navigation_bar"
 import { useSearchParams } from "next/navigation"
 import { useEffect, useState } from "react"
 import Link from "next/link";
+import Detail_handler from "../component/detail_hide"
 
 
 interface Restaurant {
@@ -19,7 +20,7 @@ interface A_card_type{
     src: string;
     name: string;
     rating: string;
-    detail: string;
+    restaurant?: Restaurant;
 }
 
 function useFindFromDatabase() {
@@ -42,7 +43,14 @@ function useFindFromDatabase() {
 
 
 
-function A_Card({src, name, rating, detail}: A_card_type){
+function A_Card({src, name, rating, restaurant}: A_card_type){
+    if(!restaurant){
+        return(
+            <div>
+                error
+            </div>
+        )
+    }
     return(
             <div className = "card">
                 <div className = "img_place">
@@ -56,10 +64,7 @@ function A_Card({src, name, rating, detail}: A_card_type){
                         </div>{rating}
                     </div>
                 </div>
-                <h2 className = "detail">{detail}</h2>
-                <div className = "more_detail">
-                    <Image id = "more_detail" src = "/more_detail_icon.png" alt = "more_detail" width = {32} height = {32}></Image>
-                </div>
+                <div className = "detail"><Detail_handler destination={restaurant}></Detail_handler></div>
             </div>
     )
 }
@@ -90,11 +95,13 @@ function Display_card(){
         <div className = "display_card">
             {total_restautant.map((name, i) => (
                 <A_Card 
-                key = {i}
-                src = {total_src[i]}
-                name = {total_restautant[i]}
-                rating = {total_rating[i]}
-                detail = {total_detail[i]}></A_Card>
+                    key = {i}
+                    src = {total_src[i]}
+                    name = {total_restautant[i]}
+                    rating = {total_rating[i]}
+                    restaurant = {restaurant[i]}
+                >
+                </A_Card>
             ))}
         </div>
     )

@@ -71,10 +71,12 @@
 }
 .name{
     width: 280px;
+    /* background-color: aqua; */
     height: auto;
-}
-h1{
     font-size: 32px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
 }
 .rating{
     position: absolute;

@@ -1,0 +1,38 @@
+.detail{
+    width: 334px;
+}
+p{
+    margin-top: 20px;
+    color: #4F4A45;
+    font-size: 16px;
+    width: 334px;
+    font-weight: bold;
+}
+#large{
+    font-size: 24px;
+}
+#medium{
+    font-size: 18px;
+}
+#opa1{
+    opacity: 0.75;
+    color: #4F4A45;
+}
+#opa2{
+    opacity: 0.5;
+    color: #4F4A45;
+}
+#opa3{
+    opacity: 0.25;
+    color: #4F4A45;
+}
+.more_detail{
+    display: flex;
+    justify-content: center;
+}
+.button_more_detail{
+  border: none;         /* เอาขอบออก */
+  outline: none;        /* เอาเส้นขอบที่ขึ้นตอนคลิกออก */
+  background: none;
+  box-shadow: none;     /* เอาเงานูนออก */
+}

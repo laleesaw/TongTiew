@@ -17,6 +17,7 @@ interface A_card_type{
     src: string;
     name: string;
     rating: string;
+    hotel?: Hotel;
 }
 
 function useFindFromDatabase() {
@@ -52,10 +53,6 @@ function A_Card({src, name, rating}: A_card_type){
                         </div>{rating}
                     </div>
                 </div>
-                {/* <h2 className = "detail">{detail}</h2> */}
-                {/* <div className = "more_detail">
-                    <Image id = "more_detail" src = "/more_detail_icon.png" alt = "more_detail" width = {32} height = {32}></Image>
-                </div> */}
             </div>
     )
 }
